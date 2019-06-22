@@ -81,18 +81,23 @@ template <typename T>
 void linkedlist<T> :: deleteFront(){
         //O(1)
        try {
-                if(head == NULL)
+                if(head == NULL){
                 throw(Exception<T>("deleting empty linkedlist"));
+                }
+                else{
+                        node<T> *oldHead = head;
+                        head =  head->next;
+                        delete oldHead;
+                        Size--;
+                                
+                }
            }
            
        catch(Exception<T>& e) {
                  cout << e.getMessage() <<endl;
         }
 
-        node<T> *oldHead = head;
-        head =  head->next;
-        delete oldHead;
-        Size--;
+        
 }
 
 template <typename T>
@@ -106,63 +111,61 @@ void linkedlist<T> :: deleteNode(const T& elem){
 
        
        try {
-                if(head == NULL)
+                if(head == NULL){
                 throw(Exception<T>("deleting empty linkedlist"));
-           }
+                }
+                
+               if(head->next == NULL && curr->elem == elem){ 
+                deleteFront(); 
+          
+                }
+        
+                while(curr != NULL){
+                        //cout << curr->elem <<endl; 
+                        if(curr->elem == elem){
+                            trail->next = curr->next;
+                            delete curr;
+                            Size --;
+                        }
+                         
+                         trail = curr;
+                         curr = curr->next;        
+                }
+                
+                if(oldSize == size())
+                        cout<<"element not found"<<endl;
+                }
+                   
        catch(Exception<T>& e) {
                          cout << e.getMessage() <<endl;
         }
            
-        if(head->next == NULL && curr->elem == elem){ 
-            deleteFront(); 
-          
-        }
-        
-        while(curr != NULL){
-                //cout << curr->elem <<endl; 
-                if(curr->elem == elem){
-                    trail->next = curr->next;
-                    delete curr;
-                    Size --;
-                }
-                 
-                 trail = curr;
-                 curr = curr->next;        
-        }
-        
-        if(oldSize == size())
-                cout<<"element not found"<<endl;
+   
 }
 
 
 template <typename T>
 const T linkedlist<T> :: peek() const{ // return front element
          try {
-                if(head == NULL)
+                if(head == NULL){
                 throw(Exception<T>("empty linkedlist"));
+                }
+                else{
+                      return head->elem; 
+                }
            }
            
         catch(Exception<T>& e) {
                  cout << e.getMessage() <<endl;
         }
-        if(head==NULL){
-            cout<<"empty list"<<endl;
-         }
-        return head->elem; 
+  
+      
 }
 
 
 template <typename T>
 void linkedlist<T>:: printList()const{
 
-        try {
-                if(head == NULL)
-                throw(Exception<T>("empty linkedlist"));
-           }
-           
-        catch(Exception<T>& e) {
-                 cout << e.getMessage() <<endl;
-        }
         node<T> *curr = head;
         while(curr != NULL){
                 cout<<curr->elem <<"-->";
@@ -197,9 +200,9 @@ void linkedlist<T> :: reverse(){
 int main(){
 
         linkedlist<float> list;
-        //list.addFront(1.4);
-        //list.addFront(1.8);
-        //list.addFront(4.079);
+        list.addFront(1.4);
+        list.addFront(1.8);
+        list.addFront(4.079);
         list.printList();
         cout << list.peek() <<endl;
         cout << list.size() <<endl;
