@@ -18,8 +18,6 @@ private:
 
 template<typename T>
 void Stack<T>::printStack() {      
-
-    //vector<T>::iterator ptr; 
    
     for (int i=size()-1; i>=0; i--) 
         cout << elem[i] << " "; 
