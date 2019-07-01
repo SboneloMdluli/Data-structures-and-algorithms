@@ -4,8 +4,6 @@
 
 using namespace std;
 
-//[1,50,58,56,89,90,2,53]
-//build a heap
 template <typename T>
 class maxHeap{
     public :
@@ -18,6 +16,8 @@ class maxHeap{
                 cout << elem <<" ";
            }
         }
+        
+        const T getMax() const{return Arr[0];}
 
     private:
         vector<T> Arr;
@@ -26,7 +26,9 @@ class maxHeap{
 template <typename T>
 void maxHeap<T>::insert(const T& x)
 {
-                Arr.push_back(x);
+        Arr.push_back(x);
+        make_maxHeap();
+            
 }
 
 template <typename T>
@@ -79,7 +81,7 @@ void maxHeap<T>::make_maxHeap(){
  
   //O(n)
  //only refer to the first half of the array because the other half contains leaf nodes
- //and we assume they are already max_heaps
+ //and we assume they are trival max_heaps
  for(int i = floor(Arr.size()/2 -1); i>=0; i--){
     maxHeapify(i);
  }
@@ -89,8 +91,7 @@ void maxHeap<T>::make_maxHeap(){
 int main(){
 
        maxHeap<int> numHeap;
-      // 35 33 42 10 14 19 27 44 26 31
-       //[1,50,58,56,89,90,2,53]
+
        numHeap.insert(35);
        numHeap.insert(33);
        numHeap.insert(42);
@@ -101,8 +102,7 @@ int main(){
        numHeap.insert(44);
        numHeap.insert(26);
        numHeap.insert(31);
-       
-       numHeap.make_maxHeap();
+       cout<<numHeap.getMax()<<endl;
        numHeap.print();
 
 }
