@@ -7,11 +7,10 @@ using namespace std;
 template <typename T>
 class maxHeap{
     public :
-        void swap(int x, int y);
-        bool empty(){return Arr.size()==0;}
-        void maxHeapify(const int& i);
+        
         void insert(const T&);
-        void make_maxHeap();
+        
+        
         void print(){
            for(T elem : Arr){
                 cout << elem <<" ";
@@ -19,29 +18,29 @@ class maxHeap{
            cout << "" <<endl;
         };
         
-        void extractMax(){
-               Arr.erase (Arr.begin());
-               make_maxHeap();
-        }
         
         void increase_key(int i,T key);
                 
-     
         const T Max() const{return Arr[0];}
         
         const T getMax();
 
     private:
         vector<T> Arr;
+        void swap(int x, int y);
+        bool empty(){return Arr.size()==0;}
+        void maxHeapify(const int& i);
+        void make_maxHeap();
+        
 };
 
 template <typename T>
 const T maxHeap<T>::getMax(){
-//O(lg(n))
+//O(lg(n)) since we must perform make_Heap() after removing the root 
 
         T max = Arr[0];
-        Arr.erase(Arr.begin(), Arr.begin() + 1);// delete first element
-        Arr[0] = Arr[Arr.size()-1]; // 
+        Arr[0] = Arr[Arr.size()-1];
+        Arr.erase(Arr.begin()+Arr.size()-1); 
         make_maxHeap();
         
         return max;
@@ -148,21 +147,18 @@ int main(){
 
        maxHeap<int> numHeap;
 
-       numHeap.insert(35);
-       numHeap.insert(33);
-       numHeap.insert(42);
-       numHeap.insert(10);
-       numHeap.insert(14);
-       numHeap.insert(19);
-       numHeap.insert(27);
-       numHeap.insert(44);
-       numHeap.insert(26);
-       numHeap.insert(31);
+       numHeap.insert(8);
+       numHeap.insert(7);
+       numHeap.insert(6);
+       numHeap.insert(3);
+       numHeap.insert(1);
+       numHeap.insert(4);
+   
             
        numHeap.print();
     
        cout << numHeap.getMax() <<endl;
-       numHeap.increase_key(6,34);
+       //numHeap.increase_key(6,34);
      
        numHeap.print();
 
