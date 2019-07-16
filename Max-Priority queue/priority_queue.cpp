@@ -16,12 +16,46 @@ class maxHeap{
            for(T elem : Arr){
                 cout << elem <<" ";
            }
+           cout << "" <<endl;
         };
         
+        void extractMax(){
+               Arr.erase (Arr.begin());
+               make_maxHeap();
+        }
+        
+        void increase_key(int i,T key);
+                
+     
+        const T getMax() const{return Arr[0];}
 
     private:
         vector<T> Arr;
 };
+
+template <typename T>
+void maxHeap<T>::increase_key(int i, T key)
+{
+        // O(lg n) , we have to go from root to node of interest which is the same as 
+        // height of the tree
+        if (key < Arr[i]){
+           cout << "key is smaller than curr key"<<endl;
+        }
+        else{
+           Arr[i] = key;
+           // compare new key with parent (if new key is greater than parent swap)
+           while(Arr[i] > Arr[floor(i/2)]){
+                swap(i, floor(i/2)); // swap child with parent 
+                i = floor(i/2);  // do this so that we can check if parent & ancestor
+                // meet the heap invarient 
+                // we cound have used recursion for this
+                
+           }
+        
+        }
+            
+}
+
 
 template <typename T>
 void maxHeap<T>::insert(const T& x)
@@ -110,9 +144,12 @@ int main(){
        numHeap.insert(44);
        numHeap.insert(26);
        numHeap.insert(31);
-       
-       
-      
+            
+       numHeap.print();
+    
+     
+       numHeap.increase_key(6,34);
+     
        numHeap.print();
 
 }
