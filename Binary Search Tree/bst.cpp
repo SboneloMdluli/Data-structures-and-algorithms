@@ -55,11 +55,6 @@ void bst<T> :: add(const T& elem){<T>
                 root = newNode;
                 size++;
         }
-        
-      
 }
-
-template <typename T>
- node<T> *
 
 
