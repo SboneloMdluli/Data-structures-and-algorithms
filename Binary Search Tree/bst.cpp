@@ -1,21 +1,23 @@
 #include <iostream>
+#include <stack>
+#include <vector>
 
 using namespace std;
 
 template <typename T>
 class node {
-    
-    public:
+    public:    
     node(){
         node<T>* left = NULL;
         node<T>* right = NULL;
     }
 
-    T elem; // store data 
+    T elem;
     node<T>* left;  
     node<T>* right;
-    
+
 };
+
 
 template <typename T>
 class bst{
@@ -23,15 +25,20 @@ class bst{
           bst();
           int const size();
           bool isEmpty() const;
-          void add(const T& elem);
-          void inorder();
+          void insert(const T& elem);
+          vector<T> postorder();
+          vector<T> inorder();
+          vector<T> preorder();
           node<T> *root;
           
         private:
-          node<T> *add(node<T> *root,const T& key);
-          void inorder(node<T> *newNode);
+          vector<T> postorder(node<T> *newNode);
+          vector<T> preorder(node<T> *newNode);
+          vector<T> inorder(node<T> *newNode);
+          node<T> *insert(node<T> *root,const T& key);
           int Size;
 };
+
 
 template <typename T>
 bst<T>::bst(){
@@ -50,16 +57,16 @@ int const bst<T>::size(){
 }
 
 template <typename T>
-void bst<T> :: add(const T& key){
+void bst<T> :: insert(const T& key){
  
     {
-      root = add(root, key);
+      root = insert(root, key);
       Size++;
     }
 }
 
 template <typename T>
-node<T> *bst<T>:: add(node<T> *newNode,const T& key){
+node<T> *bst<T>:: insert(node<T> *newNode,const T& key){
    // make root
     if (newNode == NULL) {
       node<T> *newNode = new node<T>; // create new node 
@@ -68,40 +75,143 @@ node<T> *bst<T>:: add(node<T> *newNode,const T& key){
       return newNode;
     } 
     
+    // recurvely insert new elem based on the bst invarient
     if (key < newNode->elem) 
-        newNode->left  = add(newNode->left, key); 
+        newNode->left  = insert(newNode->left, key); 
     else if (key > newNode->elem) 
-        newNode->right = add(newNode->right, key);   
+        newNode->right = insert(newNode->right, key);   
      
     return newNode;
 }
 
+
 template <typename T>
-void bst<T>::inorder(node<T> *newNode) 
+vector<T> bst<T>::preorder() 
 { 
-    if (newNode != NULL) 
-    { 
-       inorder(newNode->left); 
-       cout << newNode->elem<<endl; 
-       inorder(newNode->right); 
-    } 
+    return preorder(root); 
+} 
+
+template <typename T>
+vector<T> bst<T>::inorder() 
+{ 
+    return inorder(root); 
 } 
 
 
 template <typename T>
-void bst<T>::inorder() 
+vector<T> bst<T>::postorder() 
 { 
-    inorder(root); 
+    return postorder(root); 
 } 
 
+
+template <typename T>
+vector<T> bst<T>:: preorder(node<T> *newNode) {
+            stack< node<T> * > S;
+            vector<T> V;
+            if(!root)
+               return V;
+            S.push(newNode);
+            while(!S.empty()){
+                node<T> *temp = new node<T>;
+                temp = S.top();
+                V.push_back(temp->elem);
+                S.pop();
+                if(temp->right)
+                    S.push(temp->right);
+                if(temp->left)
+                     S.push(temp->left);
+            }
+            return V;
+}
+
+
+template <typename T>
+vector<T> bst<T>:: inorder(node<T> *newNode) {
+        stack< node<T> * > S;
+        vector<T> V;
+        while(newNode || !S.empty()){
+             while(newNode){
+                S.push(newNode);
+                newNode = newNode->left;
+            }
+            newNode = S.top();
+            S.pop();
+            V.push_back(newNode->elem);
+            newNode = newNode->right;
+        }
+        return V;
+}
+
+
+template <typename T>
+vector<T> bst<T>:: postorder(node<T> *newNode) {
+            stack< node<T> * > S;
+            vector<T> V;
+            node<T> *lastNode = new node<T>; 
+            lastNode = NULL;
+            node<T> *topNode = new node<T>; 
+           
+            while(newNode || !S.empty()){
+                while(newNode){
+                    S.push(newNode);
+                    newNode = newNode->left;
+                }
+                topNode = S.top();
+                if(topNode->right && topNode->right != lastNode){
+                    newNode = topNode->right;
+                }
+                else{
+                    V.push_back(topNode->elem);
+                    lastNode = S.top();
+                    S.pop();
+                }
+            }
+            return V;
+}
 
 int main(){
 
     bst<int> FirstTree;
-    FirstTree.add(3);
-    FirstTree.add(2); 
-    FirstTree.add(1);
-    FirstTree.add(4);
-       
-    FirstTree.inorder();
+    FirstTree.insert(25);
+    FirstTree.insert(15); 
+    FirstTree.insert(50);
+    FirstTree.insert(10);
+    FirstTree.insert(22);
+    FirstTree.insert(35);
+    FirstTree.insert(70);
+    FirstTree.insert(4);
+    FirstTree.insert(12);
+    FirstTree.insert(18);
+    FirstTree.insert(24);
+    FirstTree.insert(31);
+    FirstTree.insert(44);
+    FirstTree.insert(66);
+    FirstTree.insert(90);
+    
+     
+    vector<int> preorder = FirstTree.preorder();
+    vector<int> inorder = FirstTree.inorder();
+    vector<int> postorder = FirstTree.postorder();
+     
+    cout <<"size = " << FirstTree.size() <<endl;
+     
+    cout << "preorder"<<endl;
+    for(auto val: preorder){
+      cout << val <<" ";
+    } 
+    cout << "\n";
+    
+    cout << "inorder"<<endl;
+    for(auto val: inorder){
+      cout << val <<" ";
+    } 
+    cout << "\n";
+    
+    cout << "postorder"<<endl;
+    for(auto val: postorder){
+      cout << val <<" ";
+    } 
+    cout << "\n";
+;
 }
