@@ -69,10 +69,10 @@ template <typename T>
 void bst<T> :: insert(const T& key){
  
     //store unique elements
-    //if(! contains(key) ){
+    if(! contains(key) ){
       root = insert(root, key);
       Size++;
-   // }
+    }
 }
 
 template <typename T>
@@ -97,7 +97,7 @@ node<T> *bst<T>:: insert(node<T> *newNode,const T& key){
 
 template <typename T>
 node<T> *bst<T>:: contains(node<T> *newNode,const T& key){
-   // make root
+
     if (newNode == NULL || key == newNode->elem) {
       return newNode;
     } 
@@ -111,7 +111,9 @@ node<T> *bst<T>:: contains(node<T> *newNode,const T& key){
 
 template <typename T>
 bool bst<T>:: contains(const T& elem){
-
+        if( contains(root,elem)==NULL){
+            return false;
+        }
         return contains(root,elem)->elem == elem;
 }
 
@@ -263,7 +265,7 @@ int main(){
     FirstTree.insert(66);
     FirstTree.insert(90);
     
-     
+    
     vector<int> preorder = FirstTree.preorder();
     vector<int> inorder = FirstTree.inorder();
     vector<int> postorder = FirstTree.postorder();
