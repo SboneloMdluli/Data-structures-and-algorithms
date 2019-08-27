@@ -18,7 +18,6 @@ class node {
 
 };
 
-
 template <typename T>
 class bst{
         public:
@@ -30,12 +29,16 @@ class bst{
           vector<T> inorder();
           vector<T> preorder();
           node<T> *root;
+          bool isroot(const T& elem);
+          bool contains(const T& elem);
+          T const min();
           
         private:
           vector<T> postorder(node<T> *newNode);
           vector<T> preorder(node<T> *newNode);
           vector<T> inorder(node<T> *newNode);
           node<T> *insert(node<T> *root,const T& key);
+          node<T> *contains(node<T> *newNode,const T& ke);
           int Size;
 };
 
@@ -51,6 +54,7 @@ bool bst<T>::isEmpty() const{
         return size() == 0;
 }
 
+
 template <typename T>
 int const bst<T>::size(){
         return Size;
@@ -59,10 +63,11 @@ int const bst<T>::size(){
 template <typename T>
 void bst<T> :: insert(const T& key){
  
-    {
+    //store unique elements
+    //if(! contains(key) ){
       root = insert(root, key);
       Size++;
-    }
+   // }
 }
 
 template <typename T>
@@ -75,7 +80,7 @@ node<T> *bst<T>:: insert(node<T> *newNode,const T& key){
       return newNode;
     } 
     
-    // recurvely insert new elem based on the bst invarient
+    // recursively insert new elem based on the bst invarient
     if (key < newNode->elem) 
         newNode->left  = insert(newNode->left, key); 
     else if (key > newNode->elem) 
@@ -84,6 +89,33 @@ node<T> *bst<T>:: insert(node<T> *newNode,const T& key){
     return newNode;
 }
 
+
+template <typename T>
+node<T> *bst<T>:: contains(node<T> *newNode,const T& key){
+   // make root
+    if (newNode == NULL || key == newNode->elem) {
+      return newNode;
+    } 
+    
+    // recursively search for an elem
+    if (key < newNode->elem) 
+        return contains(newNode->left, key); 
+  
+    return  contains(newNode->right, key); 
+}
+
+template <typename T>
+bool bst<T>:: contains(const T& elem){
+
+        return contains(root,elem)->elem == elem;
+}
+
+
+template <typename T>
+bool bst<T>:: isroot(const T& elem){
+
+        return contains(root,elem)->left == NULL &&  contains(root,elem)->right == NULL;
+}
 
 template <typename T>
 vector<T> bst<T>::preorder() 
@@ -177,6 +209,7 @@ int main(){
     FirstTree.insert(15); 
     FirstTree.insert(50);
     FirstTree.insert(10);
+    FirstTree.insert(10); // duplicate elem
     FirstTree.insert(22);
     FirstTree.insert(35);
     FirstTree.insert(70);
@@ -213,5 +246,11 @@ int main(){
       cout << val <<" ";
     } 
     cout << "\n";
-;
+    
+    if(FirstTree.contains(90))
+        cout << "found"<<endl;
+        
+    if(FirstTree.isroot(31))
+        cout <<"root"<<endl;
+
 }
