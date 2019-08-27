@@ -31,7 +31,7 @@ class bst{
           node<T> *root;
           bool isroot(const T& elem);
           bool contains(const T& elem);
-          T const min();
+          T const  min();
           
         private:
           vector<T> postorder(node<T> *newNode);
@@ -39,7 +39,9 @@ class bst{
           vector<T> inorder(node<T> *newNode);
           node<T> *insert(node<T> *root,const T& key);
           node<T> *contains(node<T> *newNode,const T& ke);
+          node<T> *min(node<T> *newNode);
           int Size;
+          int Min = 0;
 };
 
 
@@ -116,6 +118,25 @@ bool bst<T>:: isroot(const T& elem){
 
         return contains(root,elem)->left == NULL &&  contains(root,elem)->right == NULL;
 }
+
+template <typename T>
+node<T> * bst<T>:: min(node<T> *newNode){
+    
+     if(newNode==NULL){
+        return newNode;
+     }
+        
+     Min = newNode->elem;
+     return min(newNode->left);
+          
+}
+
+template <typename T>
+T const bst<T>:: min(){
+       min(root);
+       return Min;
+}
+
 
 template <typename T>
 vector<T> bst<T>::preorder() 
@@ -252,5 +273,8 @@ int main(){
         
     if(FirstTree.isroot(31))
         cout <<"root"<<endl;
+        
+    cout <<"Finding min"<<endl;    
+    cout <<FirstTree.min()<<endl;
 
 }
