@@ -8,8 +8,8 @@ template <typename T>
 class node {
     public:    
     node(){
-        node<T>* left = NULL;
-        node<T>* right = NULL;
+        node<T>* left = nullptr;
+        node<T>* right = nullptr;
     }
 
     T elem;
@@ -17,6 +17,7 @@ class node {
     node<T>* right;
 
 };
+
 
 template <typename T>
 class bst{
@@ -29,19 +30,21 @@ class bst{
           vector<T> inorder();
           vector<T> preorder();
           node<T> *root;
-          bool isroot(const T& elem);
+          bool isleaf(const T& elem);
           bool contains(const T& elem);
           T const min();
           T const max();
+          void deleteNode(const T& elem);
           
         private:
           vector<T> postorder(node<T> *newNode);
           vector<T> preorder(node<T> *newNode);
           vector<T> inorder(node<T> *newNode);
           node<T> *insert(node<T> *root,const T& key);
-          node<T> *contains(node<T> *newNode,const T& ke);
+          node<T> *contains(node<T> *newNode,const T& key);
           node<T> *min(node<T> *newNode);
           node<T> *max(node<T> *newNode);
+          void deleteNode(node<T> *&newNode,const T& key);
           int Size;
           int Min;
           int Max;
@@ -50,7 +53,7 @@ class bst{
 
 template <typename T>
 bst<T>::bst(){
-        root = NULL;
+        root = nullptr;
         Size = 0;
 }
 
@@ -58,7 +61,6 @@ template <typename T>
 bool bst<T>::isEmpty() const{
         return size() == 0;
 }
-
 
 template <typename T>
 int const bst<T>::size(){
@@ -78,7 +80,7 @@ void bst<T> :: insert(const T& key){
 template <typename T>
 node<T> *bst<T>:: insert(node<T> *newNode,const T& key){
    // make root
-    if (newNode == NULL) {
+    if (newNode == nullptr) {
       node<T> *newNode = new node<T>; // create new node 
       newNode-> elem = key;
       
@@ -97,21 +99,21 @@ node<T> *bst<T>:: insert(node<T> *newNode,const T& key){
 
 template <typename T>
 node<T> *bst<T>:: contains(node<T> *newNode,const T& key){
-
-    if (newNode == NULL || key == newNode->elem) {
+    //O(h)
+    if (newNode == nullptr || key == newNode->elem) {
       return newNode;
     } 
-    
+        
     // recursively search for an elem
     if (key < newNode->elem) 
-        return contains(newNode->left, key); 
+        return contains(newNode->left,key); 
   
-    return  contains(newNode->right, key); 
+    return  contains(newNode->right,key); 
 }
 
 template <typename T>
 bool bst<T>:: contains(const T& elem){
-        if( contains(root,elem)==NULL){
+        if( contains(root,elem)==nullptr){
             return false;
         }
         return contains(root,elem)->elem == elem;
@@ -119,15 +121,15 @@ bool bst<T>:: contains(const T& elem){
 
 
 template <typename T>
-bool bst<T>:: isroot(const T& elem){
+bool bst<T>:: isleaf(const T& elem){
 
-        return contains(root,elem)->left == NULL &&  contains(root,elem)->right == NULL;
+        return contains(root,elem)->left == nullptr &&  contains(root,elem)->right == nullptr;
 }
 
 template <typename T>
 node<T> * bst<T>:: min(node<T> *newNode){
     
-     if(newNode==NULL){
+     if(newNode==nullptr){
         return newNode;
      }
         
@@ -145,7 +147,7 @@ T const bst<T>:: min(){
 template <typename T>
 node<T> * bst<T>:: max(node<T> *newNode){
     
-     if(newNode==NULL){
+     if(newNode==nullptr){
         return newNode;
      }
         
@@ -158,6 +160,37 @@ template <typename T>
 T const bst<T>:: max(){
        max(root);
        return Max;
+}
+
+
+template <typename T>
+void bst<T>::deleteNode(node<T> *&newNode,const T& key){
+
+	if (key < newNode->elem){
+		deleteNode(newNode->left, key);
+	}
+
+	else if (key > newNode->elem){
+		deleteNode(newNode->right, key);
+	}
+
+	else{
+		// if leaf node
+		if (isleaf(key))
+		{
+			// delete leaf
+			delete newNode;
+			newNode = nullptr;
+		}
+        }
+
+	
+}
+
+template <typename T>
+void bst<T>:: deleteNode(const T& elem){
+      
+     deleteNode(root,elem);
 }
 
 template <typename T>
@@ -224,7 +257,7 @@ vector<T> bst<T>:: postorder(node<T> *newNode) {
             stack< node<T> * > S;
             vector<T> V;
             node<T> *lastNode = new node<T>; 
-            lastNode = NULL;
+            lastNode = nullptr;
             node<T> *topNode = new node<T>; 
            
             while(newNode || !S.empty()){
@@ -265,6 +298,7 @@ int main(){
     FirstTree.insert(66);
     FirstTree.insert(90);
     
+    FirstTree.deleteNode(90);
     
     vector<int> preorder = FirstTree.preorder();
     vector<int> inorder = FirstTree.inorder();
@@ -293,7 +327,7 @@ int main(){
     if(FirstTree.contains(90))
         cout << "found"<<endl;
         
-    if(FirstTree.isroot(31))
+    if(FirstTree.isleaf(31))
         cout <<"root"<<endl;
         
     cout <<"Finding min"<<endl;    
@@ -301,5 +335,6 @@ int main(){
     
     cout <<"Finding max"<<endl;    
     cout <<FirstTree.max()<<endl;
-
+    
+   
 }
