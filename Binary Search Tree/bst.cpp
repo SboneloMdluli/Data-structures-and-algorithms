@@ -29,7 +29,6 @@ class bst{
           vector<T> postorder();
           vector<T> inorder();
           vector<T> preorder();
-          node<T> *root;
           bool isleaf(const T& elem);
           bool contains(const T& elem);
           T const min();
@@ -45,9 +44,10 @@ class bst{
           node<T> *min(node<T> *newNode);
           node<T> *max(node<T> *newNode);
           void deleteNode(node<T> *&newNode,const T& key);
+          node<T> *root;
           int Size;
-          int Min;
-          int Max;
+          T Min;
+          T Max;
 };
 
 
@@ -165,7 +165,8 @@ T const bst<T>:: max(){
 
 template <typename T>
 void bst<T>::deleteNode(node<T> *&newNode,const T& key){
-
+        
+     
 	if (key < newNode->elem){
 		deleteNode(newNode->left, key);
 	}
@@ -181,6 +182,19 @@ void bst<T>::deleteNode(node<T> *&newNode,const T& key){
 			// delete leaf
 			delete newNode;
 			newNode = nullptr;
+		}
+		
+		// if node with 2 children replace with in-order successor, min node in right sub tree of elem we want to delete
+		else if(newNode->left != nullptr && newNode->right !=nullptr){
+		        node<T> *successor = new node<T>;
+		        
+		        // get successor node      
+		        min(newNode->right);
+		     
+		        //delete the successor node
+		        deleteNode(root,Min);
+		        
+		        newNode->elem = Min;
 		}
         }
 
@@ -298,7 +312,7 @@ int main(){
     FirstTree.insert(66);
     FirstTree.insert(90);
     
-    FirstTree.deleteNode(90);
+    FirstTree.deleteNode(15);
     
     vector<int> preorder = FirstTree.preorder();
     vector<int> inorder = FirstTree.inorder();
@@ -324,7 +338,7 @@ int main(){
     } 
     cout << "\n";
     
-    if(FirstTree.contains(90))
+    if(FirstTree.contains(44))
         cout << "found"<<endl;
         
     if(FirstTree.isleaf(31))
