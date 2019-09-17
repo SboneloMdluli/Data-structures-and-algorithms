@@ -6,7 +6,7 @@ using namespace std;
 
 template <typename T>
 class node {
-    public:    
+    private:    
     node(){
         node<T>* left = nullptr;
         node<T>* right = nullptr;
@@ -15,7 +15,9 @@ class node {
     T elem;
     node<T>* left;  
     node<T>* right;
-
+    
+     template<class E> friend class bst; 
+    
 };
 
 
@@ -182,11 +184,11 @@ void bst<T>::deleteNode(node<T> *&newNode,const T& key){
 			// delete leaf
 			delete newNode;
 			newNode = nullptr;
+			Size--;
 		}
 		
 		// if node with 2 children replace with in-order successor, min node in right sub tree of elem we want to delete
 		else if(newNode->left != nullptr && newNode->right !=nullptr){
-		        node<T> *successor = new node<T>;
 		        
 		        // get successor node      
 		        min(newNode->right);
@@ -195,6 +197,20 @@ void bst<T>::deleteNode(node<T> *&newNode,const T& key){
 		        deleteNode(root,Min);
 		        
 		        newNode->elem = Min;
+		}
+		//has 1 child
+		else{
+		        node<T> *child = new node<T>; 
+		        
+		        // get appropriate child
+		        if(newNode->left != nullptr ){
+		            child = newNode->left;
+		        }else{
+		             child = newNode->right;
+		        }
+		        //overwrite current node with child  
+		        newNode = child;
+		        Size--;
 		}
         }
 
@@ -312,7 +328,10 @@ int main(){
     FirstTree.insert(66);
     FirstTree.insert(90);
     
-    FirstTree.deleteNode(15);
+    FirstTree.deleteNode(66);
+    FirstTree.deleteNode(70);
+    FirstTree.deleteNode(10);
+    FirstTree.deleteNode(90);
     
     vector<int> preorder = FirstTree.preorder();
     vector<int> inorder = FirstTree.inorder();
@@ -342,7 +361,7 @@ int main(){
         cout << "found"<<endl;
         
     if(FirstTree.isleaf(31))
-        cout <<"root"<<endl;
+        cout <<"leaf"<<endl;
         
     cout <<"Finding min"<<endl;    
     cout <<FirstTree.min()<<endl;
