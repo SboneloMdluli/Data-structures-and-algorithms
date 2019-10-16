@@ -102,10 +102,7 @@ void linkedlist<T> :: deleteFront(){
 
 template <typename T>
 void linkedlist<T> :: deleteNode(const T& elem){
-        //O(n)
-        //could do better O(1) if we could keep index of where the elements are in the list
-        // which is nothing more but a hashtable but only if we know the size since 
-        // in a hashtable the size must be know before allocations
+
         int oldSize = size();
         node<T> *curr=head,*trail;
 
