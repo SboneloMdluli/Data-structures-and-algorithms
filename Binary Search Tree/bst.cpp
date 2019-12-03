@@ -16,7 +16,7 @@ class node {
     node<T>* left;  
     node<T>* right;
     
-     template<class E> friend class bst; 
+    template<class E> friend class bst; 
     
 };
 
