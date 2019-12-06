@@ -36,13 +36,13 @@ bool is_edit_1(string s1, string s2)
 		if(visited[i] !=0)
 			count++;
 	}
-	
-	return count==1;
+
+	return count==1|| count ==2;
 }
 
 int main(){
 
-     string a = "once";
+     string a = "ove";
      string b = "one";
 
      if(is_edit_1(a,b)){

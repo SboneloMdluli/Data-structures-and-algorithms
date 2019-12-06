@@ -13,7 +13,7 @@ int minCost(vector<int>& num){
     
     int res, sum=0;
     
-    while (p_queue.size() > 1)  {
+    while (p_q.size() > 1)  {
         res = 0;
         res += p_q.top(); 
         p_q.pop();
