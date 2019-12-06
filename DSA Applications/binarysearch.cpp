@@ -8,7 +8,7 @@ using namespace std;
 int search(vector<int>& num, int k){
 
         if(num.size()==0){
-                return false;
+            return false;
         }
 
         int left =0, mid;
@@ -38,7 +38,7 @@ int main(){
 
         vector<int> num ={1,2,2,5,10,11};
         
-        cout << search(num,5)<<endl;
+        cout << search(num,1)<<endl;
 
 }
 

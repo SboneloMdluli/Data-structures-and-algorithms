@@ -1,50 +1,49 @@
-//ALgorithm to return a range where specific sum in an array is found
+//ALgorithm to return a range where specific sum in an array is found (only positive nums)
 
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
-void Sum_karray(int Arr[],const int &size, int &sum){
-
-        int curr_sum = Arr[0];
-        int start = 0;
-        int curr_length = 0;
+vector<int> Sum_karray(vector<int> Arr, int &sum){
+             
+        vector<int> res(2,0);
         
-        int beg=0, end=0;
+        if(Arr.size()==0)
+            return res;
         
-        //O(n)
-        for(int i = 1; i<= size ; i++){
+        int curr_sum = 0;
+        int start=0, end=0;
         
-                while(curr_sum > sum && start < i-1){
-                    curr_sum = curr_sum - Arr[start];  
+        for(int i = 0; i<= Arr.size() ; i++){
+        
+                while(curr_sum > sum){
+                    curr_sum -= Arr[start];  
                     start++;
                 }
                
-                
-                if(curr_sum==sum && (i-start >= curr_length)){
-                    beg = start;
+                if(curr_sum==sum){
                     end = i-1;
-                    curr_length = i - start;
-                 
+                    break;
                 }
-                
-                if (i < size){ 
+                    
                  curr_sum += Arr[i];
-                 }
-                // cout << curr_sum <<endl; 
         }
         
-          cout <<"element found between" << beg << " and "<< end << endl;
+         res[0]=start; 
+         res[1]=end;
+         
+         return res;
                 
 }
 
 
 int main(){
 
-        int arr[] = {0, 1, 1, 0, 4, 1, 1};
-        int size = sizeof(arr)/sizeof(arr[0]);
-        
-        int sum = 2;
-        Sum_karray(arr,size,sum);
+        vector<int> arr = {3,4,5,4,6,4,0,10};
+                
+        int sum = 20;
+        for(auto x :Sum_karray(arr,sum)){
+           cout << x << " ";
+        }
         
 }
