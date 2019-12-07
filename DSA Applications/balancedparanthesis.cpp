@@ -1,27 +1,29 @@
-//Program to check if an expression contains balanced paranthesis
+// check if string has balanced parenthesis
 
 #include <stack>
 #include <unordered_map>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-bool balanced_par(char str[],int &size){
+bool balanced_par(string& str){
 
-       //O(n) space
+       if(str.size()==0){
+	   return true;
+       }
+
        stack <char> lookup;
        unordered_map <char,char> complement_prthns;
        
-       //O(1) space
        complement_prthns.insert(make_pair('}','{'));
        complement_prthns.insert(make_pair(')','('));
        complement_prthns.insert(make_pair(']','['));
        
-       //O(n) runtime
        if(str[0] == '}' || str[0] == ')' || str[0]==']')
             return false;
 
-       for(int i=0; i <size; i++){
+       for(int i=0; i <	str.size() ; i++){
         
           if(str[i] == '{' || str[i] == '(' || str[i]=='[' ){
                          
@@ -51,12 +53,11 @@ bool balanced_par(char str[],int &size){
 
 int main(){
 
-        char str[] = "[{{}}(){}]";
-        int size = sizeof(str)/sizeof(str[0]);
+        string str = "[{{}}(){}]";
         
-        if (balanced_par(str,size))
+        if (balanced_par(str))
                 cout <<"balanced"<<endl;
-        else 
+        else
                cout << "not balanced"<<endl;
-        
 }
+
