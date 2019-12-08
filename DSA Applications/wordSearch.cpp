@@ -47,7 +47,7 @@ bool wordFound(vector<vector<char>>& puzzle, string& word ){
 
 int main(){
 
-        string word ="WEB";
+        string word ="WEE";
         vector<vector<char>> puzzle = {
                    {'A','B','S'},
                    {'S','E','E'},
