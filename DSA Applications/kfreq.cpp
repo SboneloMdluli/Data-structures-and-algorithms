@@ -30,7 +30,7 @@ vector<int> kFrequent(int Arr[], int &k, int &size){
     
     //O(n)
     while(it != lookup.end()){
-        pairs.push_back(make_pair(it->second,it->first));
+        pairs.emplace_back(it->second,it->first);
         it++;
     }
     
@@ -41,7 +41,7 @@ vector<int> kFrequent(int Arr[], int &k, int &size){
     
      //O(k)
      for(int i=0 ; i<k; i++){
-        frequency.push_back(pairs[i].second);
+        frequency.emplace_back(pairs[i].second);
      }
     
     return frequency;
@@ -52,9 +52,8 @@ int main(){
         int Arr[] = {1,1,6,6,6,0,3,4,4};
         int k =3;
         int size = sizeof(Arr)/sizeof(Arr[0]);
-        vector<int> kfreq = kFrequent(Arr,k,size);
         
-        for (int i=0; i<k;i++){
-            cout << kfreq[i] <<endl;
+        for (int& x : kFrequent(Arr,k,size)){
+            cout << x <<" ";
         }
 }
