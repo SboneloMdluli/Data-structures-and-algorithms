@@ -8,6 +8,7 @@ int klarger(vector<int>& nums, int k){
 
         priority_queue<int,vector<int>,greater<int>> pq;
         
+        //O(nlog(k))
         for(int x: nums){
                         
              pq.emplace(x);

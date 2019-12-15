@@ -9,7 +9,7 @@ int klarger(vector<int>& nums, int k){
 
        if(nums.size()<1)
             return -1;
-        
+        //O(nlog(n))
         sort(nums.begin(),nums.end());
         return nums[nums.size()-k];
 }

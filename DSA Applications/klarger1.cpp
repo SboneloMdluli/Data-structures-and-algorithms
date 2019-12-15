@@ -9,8 +9,10 @@ int klarger(vector<int>& nums, int k){
         if(nums.size()==0)
           return -1;
         
+        //O(n)
         priority_queue<int,vector<int>,greater<int>> pq(nums.begin(),nums.end());
         
+        //O((n-k)log(k))
         while(pq.size()>k){
              pq.pop();
         }
