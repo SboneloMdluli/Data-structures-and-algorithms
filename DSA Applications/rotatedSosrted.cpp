@@ -70,7 +70,7 @@ int search(vector<int>& nums,int k){
 
 int main(){
 
-        vector<int> nums = {};
+        vector<int> nums = {7,8,9,2,3,4,5};
      
         cout << search(nums,7) ; 
 }

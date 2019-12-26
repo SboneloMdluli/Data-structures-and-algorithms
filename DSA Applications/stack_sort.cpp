@@ -15,21 +15,20 @@ void sort_stack (stack<int> &num){
         int temp = num.top(); // get top element
         num.pop();
         
-    
-        while(!sorted.empty() && sorted.top() > temp){
+        while(!sorted.empty() && sorted.top() < temp){
             
             num.push(sorted.top());
             sorted.pop();
         
        }
-        
+       
         sorted.push(temp);
      
      }
      
     // return sorted;
     while(!sorted.empty()){
-        
+
         cout << sorted.top() <<endl; // get top element
         sorted.pop();
         

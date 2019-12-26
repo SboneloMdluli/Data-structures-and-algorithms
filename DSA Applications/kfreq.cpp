@@ -19,23 +19,17 @@ vector<int> kFrequent(int Arr[], int &k, int &size){
     map<int,int> lookup;    // record occurence
     vector<int> frequency; // maintain frequency
      
-     //n == array size
     //O(n)
     for(int i =0; i<size; i++){    
         lookup[Arr[i]]++;
     }
-    
-    map<int, int>::iterator it; 
-    it = lookup.begin();
-    
+        
     //O(n)
-    while(it != lookup.end()){
-        pairs.emplace_back(it->second,it->first);
-        it++;
+    while(auto i: lookup){
+        pairs.emplace_back(i.second,i.first);
     }
     
-        // a = # of unique elements
-     //O(alog(a)) 
+     //O(nlog(n)) 
      sort(pairs.begin(), pairs.end(), compareInterval); 
      
     

@@ -17,6 +17,7 @@ vector<int> kf(vector<int>& nums, int k){
         // create min priority queue
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
          
+        // nlg(n) 
         for(auto i : lookup){
              pq.emplace(i.second,i.first);
              

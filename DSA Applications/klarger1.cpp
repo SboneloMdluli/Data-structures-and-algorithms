@@ -12,7 +12,7 @@ int klarger(vector<int>& nums, int k){
         //O(n)
         priority_queue<int,vector<int>,greater<int>> pq(nums.begin(),nums.end());
         
-        //O((n-k)log(k))
+        //O((n)log(n))
         while(pq.size()>k){
              pq.pop();
         }

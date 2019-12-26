@@ -4,22 +4,22 @@
 
 using namespace std;
 
-bool dfs(vector<vector<char>>& puzzle, int i, int j, int pos, string& word){
+bool dfs(vector<vector<char>>& puzzle, int i, int j, int index, string& word){
 
-        if(i<0 || i>=puzzle.size() || j<0 || j>=puzzle[i].size() ||puzzle[i][j]!=word[pos] )
+        if(i<0 || i>=puzzle.size() || j<0 || j>=puzzle[i].size() ||puzzle[i][j]!=word[index] )
                return false;
                     
-        if(pos==word.size()-1){
+        if(index==word.size()-1){
              return true;
         }      
         
         char vis = puzzle[i][j];
         puzzle[i][j] = '*';
         
-        bool found = dfs(puzzle, i+1, j, pos+1,word)
-                        || dfs(puzzle, i-1,  j, pos+1,word)
-                        || dfs(puzzle, i,  j+1, pos+1,word)
-                        || dfs(puzzle, i, j-1, pos+1,word);
+        bool found = dfs(puzzle, i+1, j, index+1,word)
+                        || dfs(puzzle, i-1,  j, index+1,word)
+                        || dfs(puzzle, i,  j+1, index+1,word)
+                        || dfs(puzzle, i, j-1, index+1,word);
                        
        puzzle[i][j]=vis;
        
