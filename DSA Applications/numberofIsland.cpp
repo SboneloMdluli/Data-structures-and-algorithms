@@ -1,3 +1,5 @@
+//O(n*m)
+
 #include <iostream>
 #include <vector>
 

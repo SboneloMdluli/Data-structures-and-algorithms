@@ -1,3 +1,4 @@
+//2D binary search O(lg(n))
 #include <iostream>
 #include <vector>
 

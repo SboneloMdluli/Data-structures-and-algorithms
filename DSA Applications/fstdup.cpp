@@ -1,4 +1,4 @@
-//Get first duplicate element in array with 1 <= num[i] <= size
+//Get first duplicate element in array with 1 <= num[i] <= size, O(n)
 
 #include <iostream>
 #include <vector>

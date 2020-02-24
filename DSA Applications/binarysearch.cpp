@@ -1,4 +1,4 @@
-//binary search
+//binary search O(lg(n))
 #include <iostream>
 #include <vector>
 #include <cmath>
