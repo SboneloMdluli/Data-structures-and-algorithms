@@ -6,7 +6,8 @@ using namespace std;
 
 vector<vector<int>> permute(vector<int>& nums) {
         
-        vector<vector<int>> perm;
+        vector<vector<int>> perm;   
+
         //(nlg(n))
         sort(nums.begin(),nums.end());
     	
