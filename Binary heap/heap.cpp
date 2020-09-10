@@ -7,7 +7,6 @@ using namespace std;
 template <typename T>
 class maxHeap{
     public :
-        void swap(int x, int y);
         bool empty(){return Arr.size()==0;}
         void maxHeapify(const int& i);
         void insert(const T&);
@@ -31,12 +30,6 @@ void maxHeap<T>::insert(const T& x)
             
 }
 
-template <typename T>
-void maxHeap<T>::swap(int pos_i, int pos_j){
-        Arr[pos_i] = Arr[pos_i]^Arr[pos_j];
-        Arr[pos_j] = Arr[pos_i]^Arr[pos_j];
-        Arr[pos_i] = Arr[pos_i]^Arr[pos_j];
-}
 
 template <typename T>
 void maxHeap<T>::maxHeapify(const int& i){
@@ -66,7 +59,7 @@ void maxHeap<T>::maxHeapify(const int& i){
  // check if largest is the parent
  if (largest != i){
   // make largest elem to be the parent by swapping largest with current largest elem
-  swap(i,largest);
+  Arr.swap(i,largest);
    // make a recursive call to the function only from that node
    // and make a heap root to leaves
   maxHeapify(largest); 
